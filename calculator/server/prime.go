@@ -9,25 +9,23 @@ import (
 func (s *Server) Prime(in *pb.PrimeRequest, stream pb.CalculatorService_PrimeServer) error {
 	log.Printf("Received Generating Prime number for: %v", in.Number)
 
-	var k int32 = 2
-	N := in.Number
-	c := 0
+	divisor := int32(2)
+	number := in.Number
 
-	for N > 1 {
-		if N%k == 0 {
+	for number > 1 {
+		if number%divisor == 0 {
 
 			err := stream.Send(&pb.PrimeResponse{
-				PrimeFactor: k,
+				PrimeFactor: divisor,
 			})
 
 			if err != nil {
 				return err
 			}
 
-			N = N / k
-			c += 1
+			number /= divisor
 		} else {
-			k = k + 1
+			divisor +=  1
 		}
 	}
 
