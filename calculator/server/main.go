@@ -4,27 +4,25 @@ import (
 	"log"
 	"net"
 
-	pb "github.com/jaycchiu524/go-api-grpc/greet/proto"
+	pb "github.com/jaycchiu524/go-api-grpc/calculator/proto"
 	"google.golang.org/grpc"
 )
 
-var addr string = "0.0.0.0:50051"
+var addr string = "0.0.0.0:50052"
 
 type Server struct {
-	pb.GreetServiceServer
+	pb.SumServiceServer
 }
 
 func main() {
-	lis, err := net.Listen("tcp", addr)
-
-	if(err != nil) {
+	lis, err := net.Listen("tcp", addr); if(err!=nil) {
 		log.Fatalf("failed to listen: %v", err)
 	}
 
 	log.Printf("Listening on %s", addr)
 
 	s := grpc.NewServer()
-	pb.RegisterGreetServiceServer(s, &Server{})
+	pb.RegisterSumServiceServer(s, &Server{})
 
 	// Register the service
 	if err = s.Serve(lis); err != nil {
