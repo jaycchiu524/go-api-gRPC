@@ -4,15 +4,10 @@ package calculator;
 
 option go_package = "github.com/jaycchiu524/go-api-grpc/calculator/proto";
 
-message SumRequest {
-  int32 a = 1;
-  int32 b = 2;
-}
+import "sum.proto";
+import "primes.proto";
 
-message SumResponse {
-  int32 sum = 1;
-}
-
-service SumService {
+service CalculatorService {
   rpc Sum(SumRequest) returns (SumResponse);
+  rpc Prime(PrimeRequest) returns (stream PrimeResponse);
 }
